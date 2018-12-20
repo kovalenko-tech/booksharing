@@ -15,7 +15,13 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try services.register(FluentPostgreSQLProvider())
 
     // Configure a SQLite database
-    let postgresqlConfig = try PostgreSQLDatabaseConfig.default()
+    let postgresqlConfig = PostgreSQLDatabaseConfig(
+        hostname: "manny.db.elephantsql.com",
+        port: 5432,
+        username: "tlizqtzq",
+        database: "tlizqtzq",
+        password: "7tw9uvI7hSy471P9MLIU0LsDUSPSOmki"
+    )
     services.register(postgresqlConfig)
     
     let poolConfig = DatabaseConnectionPoolConfig(maxConnections: 5)
