@@ -29,13 +29,27 @@ extension BookRequest: Validatable {
     }
 }
 
-struct BookResponse: Content {
-    let id: Int
-    let image: String
+final class BookResponse: PostgreSQLModel {
+    
+    static let entity = "Book"
+    
+    var id: Int?
+    
+    let image: String?
     let name: String
     let author: String
     let note: String
+    
+    init(id: Int?, image: String?, name: String, author: String, note: String) {
+        self.id = id
+        self.image = image
+        self.name = name
+        self.author = author
+        self.note = note
+    }
 }
+
+extension BookResponse: Paginatable, Content {}
 
 final class Book: PostgreSQLModel {
     var id: Int?

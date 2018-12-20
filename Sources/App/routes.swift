@@ -27,6 +27,7 @@ public func routes(_ router: Router) throws {
     
     bookGroup.post(BookRequest.self, at: "add", use: bookController.add)
     bookGroup.get("list", use: bookController.list)
+    bookGroup.get("", Book.parameter, use: bookController.get)
     bookGroup.patch("", Book.parameter, use: bookController.updateInfo)
     bookGroup.delete("", Book.parameter, use: bookController.delete)
 }

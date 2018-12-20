@@ -35,8 +35,14 @@ class BookController {
         }
     }
     
-    func get(_ req: Request) -> String {
-        return ""
+    func get(_ req: Request) -> Future<BookResponse> {
+        return try! req.parameters.next(Book.self).map(to: BookResponse.self) { book in
+            return BookResponse(id: book.id ?? 0,
+                                image: book.image,
+                                name: book.name,
+                                author: book.author,
+                                note: book.note)
+        }
     }
     
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
@@ -74,9 +80,9 @@ class BookController {
         return ""
     }
     
-    func list(_ req: Request) throws -> Future<Paginated<Book>> {
-        return req.withPooledConnection(to: .psql) { (conn) -> Future<Paginated<Book>> in
-            return try Book.query(on: conn).paginate(for: req)
+    func list(_ req: Request) throws -> Future<Paginated<BookResponse>> {
+        return req.withPooledConnection(to: .psql) { (conn) -> Future<Paginated<BookResponse>> in
+            return try BookResponse.query(on: conn).paginate(for: req)
         }
     }
     
